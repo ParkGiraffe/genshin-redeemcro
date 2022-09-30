@@ -1,21 +1,30 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyA1G1aNNfSbvZL8jXaEmrjCtDcHdQImRD8",
-  authDomain: "genshin-redeem-macro.firebaseapp.com",
-  projectId: "genshin-redeem-macro",
-  storageBucket: "genshin-redeem-macro.appspot.com",
-  messagingSenderId: "630369746705",
-  appId: "1:630369746705:web:9671ed0dc7e16e03b056b0",
-  measurementId: "G-KCEHQHS958"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId:process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env. REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+export const db = getFirestore(app);
+
+// Firestore API
+export const getRdmCodes = async (db) => {
+  const col = collection(db, 'redeem_code_list'); // collection name
+  const snapshot = await getDocs(col); // get all documents in collection
+  const codeList = snapshot.docs.map(doc => doc.data()); // get data from documents
+  return codeList;
+}
+

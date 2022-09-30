@@ -17,6 +17,7 @@
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 npm-debug.log*
 yarn-debug.log*
@@ -41,7 +42,6 @@ service-account-credentials.json
 **/pubsub-debug.log
 **/tsconfig-compile.json
 **/firestore.rules
-**/firebase.json
 **/firestore.indexes.json
 **/database.rules.json
 **/remoteconfig.json
